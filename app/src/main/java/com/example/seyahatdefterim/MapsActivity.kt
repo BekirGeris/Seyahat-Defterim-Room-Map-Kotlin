@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapClickListener {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
@@ -55,7 +55,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapCli
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.setOnMapClickListener(this)
+        mMap.setOnMapLongClickListener(this)
 
         locationManager = this.getSystemService(LOCATION_SERVICE) as LocationManager
 
@@ -105,7 +105,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapCli
                         val lastUserLocation = LatLng(lastLocation.latitude, lastLocation.longitude)
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 15f))
                     }
-                    mMap.isMyLocationEnabled = true
                 }
             }else{
                 //izin verilmedi
@@ -114,9 +113,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapCli
         }
     }
 
-    override fun onMapClick(p0: LatLng) {
-
+    override fun onMapLongClick(p0: LatLng) {
         mMap.clear()
         mMap.addMarker(MarkerOptions().position(p0))
     }
 }
+
+
